@@ -8,10 +8,19 @@ import { Router } from '@angular/router';
 })
 export class FinancialProductsListComponent {
 
+  showConfirmModal : boolean = false;
+
   constructor(private router: Router) {}
 
-  addFinancialProduct() {
-    console.log(this.router);
+  addFinancialProduct(): void {
     this.router.navigate(['/financial-products/create']);
+  }
+
+  openConfirmModal(): void {
+    this.showConfirmModal = true;
+  }
+
+  closeConfirmModal(): void {
+    this.showConfirmModal = false;
   }
 }

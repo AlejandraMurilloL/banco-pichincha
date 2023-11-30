@@ -30,7 +30,7 @@
                             <img src="../../../../assets/menu.png" alt="icono menú" id="menu-icon">
                             <div class="dropdown-content">
                               <a href="#">Editar</a>
-                              <a href="#">Eliminar</a>
+                              <a (click)="openConfirmModal()">Eliminar</a>
                             </div>
                         </div>
                     </td>
@@ -64,3 +64,5 @@
         </div>
     </div>
 </section>
+
+<app-confirm-modal *ngIf="showConfirmModal" content="Esta seguro de eliminar el producto" (modalClosed)="closeConfirmModal()"></app-confirm-modal>
