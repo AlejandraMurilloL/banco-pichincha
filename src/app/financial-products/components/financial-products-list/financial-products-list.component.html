@@ -1,1 +1,66 @@
-<p>financial-products-list works!</p>
+<section class="list">
+    <div class="actions-container">
+        <input type="text" placeholder="Search...">
+        <button class="add">Agregar</button>
+    </div>
+    
+    <div class="list-container">
+        <table class="products-table">
+            <thead>
+                <tr>
+                    <th>Logo</th>
+                    <th>Nombre del producto</th>
+                    <th>Descripción</th>
+                    <th>Fecha de liberación</th>
+                    <th>Fecha de reestructuración</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg" alt="logo" id="product-logo">
+                    </td>
+                    <td>Producto 1</td>
+                    <td>Descripción 1</td>
+                    <td>01/01/2000</td>
+                    <td>01/01/2001</td>
+                    <td>
+                        <div class="dropdown">
+                            <img src="../../../../assets/menu.png" alt="icono menú" id="menu-icon">
+                            <div class="dropdown-content">
+                              <a href="#">Editar</a>
+                              <a href="#">Eliminar</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg" alt="logo" id="product-logo">
+                    </td>
+                    <td>Producto 2</td>
+                    <td>Descripción 2</td>
+                    <td>01/01/2000</td>
+                    <td>01/01/2001</td>
+                    <td>
+                        <div class="dropdown">
+                            <img src="../../../../assets/menu.png" alt="icono menú" id="menu-icon">
+                            <div class="dropdown-content">
+                              <a href="#">Editar</a>
+                              <a href="#">Eliminar</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>    
+        </table>
+        <div class="summary-list">
+            <span>5 Resultados</span>
+            <select name="pagination" id="pagination">
+                <option>5</option>
+                <option>10</option>
+            </select>
+        </div>
+    </div>
+</section>
