@@ -1,0 +1,60 @@
+.detail {
+    margin: 5% 25%;
+    background-color: #fff;
+}
+
+h2 {
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid #a5a8ad;
+}
+
+.product-form {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    margin: 0 2.5rem;
+}
+
+.form-input {
+    width: 49%;
+    box-sizing: border-box;
+    margin: 0.8rem 0;
+}
+
+.form-input input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8rem 0.5rem;
+    border: 1px solid #a5a8ad;
+    border-radius: 0.3rem;
+}
+
+label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.actions-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+button {
+    padding: 0.7rem 1.5rem;
+    margin: 1rem;
+    border: none;
+    border-radius: 0.3rem;
+}
+
+.restart-button {
+    background-color: #E9ECF3;
+}
+
+.send-button {
+    background-color: #F9DE4B;
+}
