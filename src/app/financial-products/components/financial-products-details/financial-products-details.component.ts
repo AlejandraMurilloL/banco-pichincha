@@ -55,6 +55,10 @@ export class FinancialProductsDetailsComponent implements OnInit {
       .subscribe(() => this.router.navigate(['/financial-products/list']));
   }
 
+  resetForm() {
+    this.form.patchValue({ id: '', name: '', description: '', logo: '', date_release: '',  date_revision: ''});
+  }
+
   onChanges(): void {
     this.form.get('date_release')?.valueChanges.subscribe(val => {
       const releaseDate = new Date(val);

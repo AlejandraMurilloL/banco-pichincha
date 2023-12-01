@@ -67,7 +67,7 @@
 
     </form>    
     <div class="actions-container">
-        <button class="restart-button">Reiniciar</button>
+        <button class="restart-button" (click)="resetForm()">Reiniciar</button>
         <button class="send-button" (click)="saveFinancialProduct(form.getRawValue())" [disabled]="form.invalid">Enviar</button>
     </div>
 
