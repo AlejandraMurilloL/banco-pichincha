@@ -21,4 +21,8 @@ export class FinancialProductsService {
   getExistFinancialProduct(id: string) {
     return this.http.get<boolean>(`${this.baseUrl}products/verification?id=${ id }`);
   }
+
+  createFinancialProduct(product: FinancialProduct) {
+    return this.http.post<FinancialProduct>(`${this.baseUrl}products`, product);
+  }
 }

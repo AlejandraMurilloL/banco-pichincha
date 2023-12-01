@@ -12,6 +12,7 @@ export class FinancialProductsListComponent implements OnInit {
 
   showConfirmModal : boolean = false;
   financialProducts: FinancialProduct[] = [];
+  resultCount: number[] = [5, 10, 20];
 
   constructor(
     private router: Router,

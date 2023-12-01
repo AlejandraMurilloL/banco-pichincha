@@ -23,8 +23,8 @@
                     </td>
                     <td>{{ product.name }}</td>
                     <td>{{ product.description }}</td>
-                    <td>{{ product.date_release | date }}</td>
-                    <td>{{ product.date_revision }}</td>
+                    <td>{{ product.date_release | date: 'dd/MM/yyyy': "UTC" }}</td>
+                    <td>{{ product.date_revision | date: 'dd/MM/yyyy': "UTC" }}</td>
                     <td>
                         <div class="dropdown">
                             <img src="../../../../assets/menu.png" alt="icono menú" id="menu-icon">
@@ -38,10 +38,9 @@
             </tbody>    
         </table>
         <div class="summary-list">
-            <span>5 Resultados</span>
+            <span>{{ financialProducts.length }} Resultados</span>
             <select name="pagination" id="pagination">
-                <option>5</option>
-                <option>10</option>
+                <option *ngFor="let item of resultCount">{{ item }}</option>
             </select>
         </div>
     </div>

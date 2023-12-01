@@ -34,11 +34,19 @@
                 [class.invalid]="form.get('description')?.invalid && form.get('description')?.touched">
             <span class="input-error">{{ checkForErrorsIn('description') }}</span>
         </div>
+
         <div class="form-input">
             <label for="logo">Logo</label>
-            <input type="url" placeholder="Logo" id="logo" formControlName="logo">
+            <input 
+                type="url" 
+                placeholder="Logo" 
+                id="logo" 
+                formControlName="logo"
+                [class.valid]="form.get('logo')?.valid && form.get('logo')?.touched"
+                [class.invalid]="form.get('logo')?.invalid && form.get('logo')?.touched">
             <span class="input-error">{{ checkForErrorsIn('logo') }}</span>
         </div>
+
         <div class="form-input">
             <label for="releaseDate">Fecha Liberación</label>
             <input 
@@ -51,15 +59,16 @@
                 [class.invalid]="form.get('date_release')?.invalid && form.get('date_release')?.touched">
             <span class="input-error">{{ checkForErrorsIn('date_release') }}</span>
         </div>
+
         <div class="form-input">
             <label for="reviewDate">Fecha Revisión</label>
             <input type="date" placeholder="Fecha de revisión" id="reviewDate" formControlName="date_revision">
-            <span class="input-error">{{ checkForErrorsIn('date_revision') }}</span>
         </div>
+
     </form>    
     <div class="actions-container">
         <button class="restart-button">Reiniciar</button>
-        <button class="send-button" (click)="saveFinancialProduct(form.value)" [disabled]="form.invalid">Enviar</button>
+        <button class="send-button" (click)="saveFinancialProduct(form.getRawValue())" [disabled]="form.invalid">Enviar</button>
     </div>
 
 </section>

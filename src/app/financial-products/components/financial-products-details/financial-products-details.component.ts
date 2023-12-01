@@ -1,5 +1,7 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FinancialProduct } from '../../models/financial-products.models';
 import { FinancialProductsService } from '../../services/financial-products.service';
 import { productIdValidator } from '../../validators/product-id.validator';
@@ -24,6 +26,8 @@ export class FinancialProductsDetailsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private datePipe: DatePipe,
+    private router: Router,
     private financialProductService: FinancialProductsService
   ) {
   }
@@ -39,35 +43,46 @@ export class FinancialProductsDetailsComponent implements OnInit {
       description   : ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(200) ]],
       logo          : ['', Validators.required],
       date_release  : ['', Validators.required],
-      date_revision : ['', Validators.required]
-    })
+      date_revision : [{ value:  '', disabled: true }, Validators.required]
+    });
+
+    this.onChanges();
   }
 
   saveFinancialProduct(financialProduct: FinancialProduct): void {
-    console.log(financialProduct);
+    this.financialProductService
+      .createFinancialProduct(financialProduct)
+      .subscribe(() => this.router.navigate(['/financial-products/list']));
   }
 
-  checkForErrorsIn(formControlName: string): string {
+  onChanges(): void {
+    this.form.get('date_release')?.valueChanges.subscribe(val => {
+      const releaseDate = new Date(val);
+      const reviewDate = new Date(releaseDate.getFullYear() + 1, releaseDate.getMonth(), releaseDate.getDate() + 1);
+      this.form.patchValue({ date_revision: this.datePipe.transform(reviewDate, "yyyy-MM-dd") });
+    });
+  }
 
-    if (!this.form.get(formControlName)?.touched || 
-        !this.form.get(formControlName)?.invalid) 
+  checkForErrorsIn(control: string): string {
+    if (!this.form.get(control)?.touched || 
+        !this.form.get(control)?.invalid) 
         return '';
 
-    if (this.form.get(formControlName)?.errors?.['required']) {
+    if (this.form.get(control)?.errors?.['required']) {
       return 'Este campo es requerido!'
     }
 
-    if (this.form.get(formControlName)?.errors?.['minlength']) {
-      const min = this.form.get(formControlName)?.errors?.['minlength']?.['requiredLength'] || '';
+    if (this.form.get(control)?.errors?.['minlength']) {
+      const min = this.form.get(control)?.errors?.['minlength']?.['requiredLength'] || '';
       return `El campo debe tener mínimo ${min} caracteres`;
     }
 
-    if (this.form.get(formControlName)?.errors?.['maxlength']) {
-      const max = this.form.get(formControlName)?.errors?.['maxlength']?.['requiredLength'] || '';
+    if (this.form.get(control)?.errors?.['maxlength']) {
+      const max = this.form.get(control)?.errors?.['maxlength']?.['requiredLength'] || '';
       return `El campo debe tener máximo ${max} caracteres`;
     }    
 
-    if (this.form.get(formControlName)?.errors?.['idAlreadyExists']) {
+    if (this.form.get(control)?.errors?.['idAlreadyExists']) {
       return 'El ID indicado ya existe';
     }
 
