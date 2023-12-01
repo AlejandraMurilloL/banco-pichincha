@@ -49,6 +49,7 @@ button {
     margin: 1rem;
     border: none;
     border-radius: 0.3rem;
+    cursor: pointer;
 }
 
 .restart-button {
@@ -57,4 +58,13 @@ button {
 
 .send-button {
     background-color: #F9DE4B;
+}
+
+.input-error {
+    color: red;
+    font-size: 0.8rem;
+}
+
+.invalid {
+    border: 1px solid red !important;
 }

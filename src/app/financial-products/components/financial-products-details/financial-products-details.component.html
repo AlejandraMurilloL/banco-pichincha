@@ -1,34 +1,65 @@
 <section class="detail">
     <h2>Formulario de Registro</h2>
-    <form class="product-form">
+    <form class="product-form" [formGroup]="form">
         <div class="form-input">
             <label for="id">ID</label>
-            <input type="text" placeholder="ID" id="id">
+            <input 
+                placeholder="ID" 
+                id="id" 
+                formControlName="id" 
+                [class.valid]="form.get('id')?.valid && form.get('id')?.touched"
+                [class.invalid]="form.get('id')?.invalid && form.get('id')?.touched">
+            <span class="input-error">{{ checkForErrorsIn('id') }}</span>
         </div>
+
         <div class="form-input">
             <label for="name">Nombre</label>
-            <input type="text" placeholder="Tarjeta Crédito" id="name">
+            <input 
+                placeholder="Tarjeta Crédito" 
+                id="name" 
+                formControlName="name"
+                [class.valid]="form.get('name')?.valid && form.get('name')?.touched"
+                [class.invalid]="form.get('name')?.invalid && form.get('name')?.touched">
+            <span class="input-error">{{ checkForErrorsIn('name') }}</span>
         </div>
+
         <div class="form-input">
             <label for="description">Descripción</label>
-            <input type="text" placeholder="Descripción" id="description">
+            <input 
+                type="text" 
+                placeholder="Descripción" 
+                id="description" 
+                formControlName="description"
+                [class.valid]="form.get('description')?.valid && form.get('description')?.touched"
+                [class.invalid]="form.get('description')?.invalid && form.get('description')?.touched">
+            <span class="input-error">{{ checkForErrorsIn('description') }}</span>
         </div>
         <div class="form-input">
             <label for="logo">Logo</label>
-            <input type="text" placeholder="Logo" id="logo">
+            <input type="url" placeholder="Logo" id="logo" formControlName="logo">
+            <span class="input-error">{{ checkForErrorsIn('logo') }}</span>
         </div>
         <div class="form-input">
             <label for="releaseDate">Fecha Liberación</label>
-            <input type="date" placeholder="Fecha liberación" id="releaseDate">
+            <input 
+                type="date" 
+                placeholder="Fecha liberación" 
+                id="releaseDate" 
+                formControlName="date_release" 
+                min="{{ todayDate | date:'yyyy-MM-dd'}}"
+                [class.valid]="form.get('date_release')?.valid && form.get('date_release')?.touched"
+                [class.invalid]="form.get('date_release')?.invalid && form.get('date_release')?.touched">
+            <span class="input-error">{{ checkForErrorsIn('date_release') }}</span>
         </div>
         <div class="form-input">
             <label for="reviewDate">Fecha Revisión</label>
-            <input type="date" placeholder="Fecha de revisión" id="reviewDate">
+            <input type="date" placeholder="Fecha de revisión" id="reviewDate" formControlName="date_revision">
+            <span class="input-error">{{ checkForErrorsIn('date_revision') }}</span>
         </div>
-        <div class="actions-container">
-            <button class="restart-button">Reiniciar</button>
-            <button class="send-button">Enviar</button>
-        </div>
-    </form>
+    </form>    
+    <div class="actions-container">
+        <button class="restart-button">Reiniciar</button>
+        <button class="send-button" (click)="saveFinancialProduct(form.value)" [disabled]="form.invalid">Enviar</button>
+    </div>
 
 </section>
