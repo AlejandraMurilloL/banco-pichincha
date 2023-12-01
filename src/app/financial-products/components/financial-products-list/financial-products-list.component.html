@@ -17,38 +17,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr *ngFor="let product of financialProducts">
                     <td>
-                        <img src="https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg" alt="logo" id="product-logo">
+                        <img [src]="product.logo" alt="logo" id="product-logo">
                     </td>
-                    <td>Producto 1</td>
-                    <td>Descripción 1</td>
-                    <td>01/01/2000</td>
-                    <td>01/01/2001</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.date_release | date }}</td>
+                    <td>{{ product.date_revision }}</td>
                     <td>
                         <div class="dropdown">
                             <img src="../../../../assets/menu.png" alt="icono menú" id="menu-icon">
                             <div class="dropdown-content">
                               <a href="#">Editar</a>
                               <a (click)="openConfirmModal()">Eliminar</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg" alt="logo" id="product-logo">
-                    </td>
-                    <td>Producto 2</td>
-                    <td>Descripción 2</td>
-                    <td>01/01/2000</td>
-                    <td>01/01/2001</td>
-                    <td>
-                        <div class="dropdown">
-                            <img src="../../../../assets/menu.png" alt="icono menú" id="menu-icon">
-                            <div class="dropdown-content">
-                              <a href="#">Editar</a>
-                              <a href="#">Eliminar</a>
                             </div>
                         </div>
                     </td>
