@@ -1,6 +1,6 @@
 <section class="list">
     <div class="actions-container">
-        <input type="text" placeholder="Search...">
+        <input type="text" placeholder="Search..." [(ngModel)]="filterText" (keyup)="filterProducts()">
         <button class="add" (click)="addFinancialProduct()">Agregar</button>
     </div>
     
@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let product of financialProducts">
+                <tr *ngFor="let product of financialProductsFiltered">
                     <td>
                         <img [src]="product.logo" alt="logo" id="product-logo">
                     </td>
@@ -38,9 +38,9 @@
             </tbody>    
         </table>
         <div class="summary-list">
-            <span>{{ financialProducts.length }} Resultados</span>
-            <select name="pagination" id="pagination">
-                <option *ngFor="let item of resultCount">{{ item }}</option>
+            <span>{{ financialProductsFiltered.length }} Resultados</span>
+            <select name="pagination" id="pagination" (change)="pageSizeSelected()" [(ngModel)]="pageSize">
+                <option *ngFor="let item of pageSizes">{{ item }}</option>
             </select>
         </div>
     </div>
