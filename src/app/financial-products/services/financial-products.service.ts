@@ -22,7 +22,19 @@ export class FinancialProductsService {
     return this.http.get<boolean>(`${this.baseUrl}products/verification?id=${ id }`);
   }
 
-  createFinancialProduct(product: FinancialProduct) {
+  deleteFinancialProduct(id: string) {
+    this.http.delete(`${this.baseUrl}products?id=${ id }`);
+  }
+
+  saveFinancialProduct(product: FinancialProduct, isEdition: boolean) {
+    return isEdition ? this._updateFinancialProduct(product) : this._createFinancialProduct(product);
+  }
+
+  private _createFinancialProduct(product: FinancialProduct) {
     return this.http.post<FinancialProduct>(`${this.baseUrl}products`, product);
+  }
+
+  private _updateFinancialProduct(product: FinancialProduct) {
+    return this.http.put<FinancialProduct>(`${this.baseUrl}products`, product);
   }
 }

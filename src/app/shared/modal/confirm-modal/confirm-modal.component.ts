@@ -8,8 +8,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ConfirmModalComponent {
   @Input() content: string = '';
   @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
+  @Output() modalConfirm: EventEmitter<void> = new EventEmitter<void>();
 
   closeModal(): void {
     this.modalClosed.emit();
+  }
+
+  confirm(): void {
+    this.modalConfirm.emit();
   }
 }

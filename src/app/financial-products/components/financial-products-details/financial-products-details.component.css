@@ -68,3 +68,7 @@ button {
 .invalid {
     border: 1px solid red !important;
 }
+
+input:disabled {
+    background-color: #F4F6F9;
+}

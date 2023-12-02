@@ -1,5 +1,5 @@
-import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { DatePipe, Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FinancialProduct } from '../../models/financial-products.models';
@@ -12,46 +12,53 @@ import { productIdValidator } from '../../validators/product-id.validator';
   styleUrls: ['./financial-products-details.component.css']
 })
 export class FinancialProductsDetailsComponent implements OnInit {
-  @Input() financialProduct: FinancialProduct = {
-    id: '',
-    name: '',
-    description: '',
-    logo: '',
-    date_release: new Date(),
-    date_revision: new Date(),
-  }
 
-  form!: FormGroup;
-  todayDate: Date = new Date();
+  form!     : FormGroup;
+  todayDate : Date = new Date();
+  isEdition : boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private datePipe: DatePipe,
     private router: Router,
+    private location: Location,
     private financialProductService: FinancialProductsService
   ) {
+    // const product = this.location.getState() as FinancialProduct;
+    // this.isEdition = product ? true : false;
+    // this.financialProduct = product;
   }
 
   ngOnInit(): void {
+    const { id, name, description, logo, date_release, date_revision } = this.location.getState() as FinancialProduct;
+
     this.form = this.formBuilder.group({
-      id            : ['', { 
-        validators: [ Validators.required, Validators.minLength(3), Validators.maxLength(10) ], 
-        asyncValidators: [productIdValidator(this.financialProductService)], 
-        updateOn: 'blur'
-      }],
-      name          : ['', [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ]],
-      description   : ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(200) ]],
-      logo          : ['', Validators.required],
-      date_release  : ['', Validators.required],
-      date_revision : [{ value:  '', disabled: true }, Validators.required]
+      id            : [
+                        id, 
+                        { 
+                          validators: [ Validators.required, Validators.minLength(3), Validators.maxLength(10) ], 
+                          asyncValidators: [productIdValidator(this.financialProductService)], 
+                          updateOn: 'blur'
+                        }
+                      ],
+      name          : [name, [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ]],
+      description   : [description, [ Validators.required, Validators.minLength(10), Validators.maxLength(200) ]],
+      logo          : [logo, Validators.required],
+      date_release  : [this.datePipe.transform(date_release, "yyyy-MM-dd", 'UTC'), Validators.required],
+      date_revision : [{ value: this.datePipe.transform(date_revision, "yyyy-MM-dd", 'UTC'), disabled: true }, Validators.required]
     });
+
+    if (!!id)  {
+      this.form.get('id')?.disable();
+      this.isEdition = true;
+    }
 
     this.onChanges();
   }
 
   saveFinancialProduct(financialProduct: FinancialProduct): void {
     this.financialProductService
-      .createFinancialProduct(financialProduct)
+      .saveFinancialProduct(financialProduct, this.isEdition)
       .subscribe(() => this.router.navigate(['/financial-products/list']));
   }
 

@@ -11,13 +11,14 @@ import { FinancialProductsService } from '../../services/financial-products.serv
 })
 export class FinancialProductsListComponent implements OnInit {
 
-  showConfirmModal : boolean = false;
-  financialProducts: FinancialProduct[] = [];
-  financialProductsFiltered: FinancialProduct[] = [];
-  filterText: string = '';
+  showConfirmModal          : boolean = false;
+  financialProducts         : FinancialProduct[] = [];
+  financialProductsFiltered : FinancialProduct[] = [];
+  filterText                : string = '';
+  productToDelete!          : FinancialProduct;
 
-  pageSizes: number[] = [1, 2, 3];
-  pageSize: number = 2;
+  pageSizes : number[] = [1, 2, 3];
+  pageSize  : number = 2;
 
   constructor(
     private router: Router,
@@ -38,7 +39,8 @@ export class FinancialProductsListComponent implements OnInit {
     this.router.navigate(['/financial-products/create']);
   }
 
-  openConfirmModal(): void {
+  openConfirmModal(financialProduct: FinancialProduct): void {
+    this.productToDelete = financialProduct;
     this.showConfirmModal = true;
   }
 
@@ -46,9 +48,18 @@ export class FinancialProductsListComponent implements OnInit {
     this.showConfirmModal = false;
   }
 
+  confirmDelete(): void {
+    this._deleteFinancialProduct();
+    this.showConfirmModal = false;
+  }
+
   pageSizeSelected(): void {
     this.filterProducts();
     this.financialProductsFiltered = this.financialProductsFiltered.slice(0, this.pageSize);
+  }
+
+  editProduct(product: FinancialProduct): void  {
+    this.router.navigate([`/financial-products/update/${product.id}`], { state: product });
   }
 
   filterProducts() {
@@ -64,5 +75,10 @@ export class FinancialProductsListComponent implements OnInit {
               this.datePipe.transform(item.date_release, "dd/MM/yyyy", 'UTC')?.includes(this.filterText.toLowerCase()) || 
               this.datePipe.transform(item.date_revision, "dd/MM/yyyy", 'UTC')?.includes(this.filterText.toLowerCase()) 
     ).slice(0, this.pageSize);
+  }
+
+  private _deleteFinancialProduct() {
+    this.financialProductsServices
+      .deleteFinancialProduct(this.productToDelete.id);
   }
 }
