@@ -23,7 +23,7 @@ export class FinancialProductsService {
   }
 
   deleteFinancialProduct(id: string) {
-    this.http.delete(`${this.baseUrl}products?id=${ id }`);
+    return this.http.delete(`${this.baseUrl}products?id=${ id }`, { responseType: 'text' });
   }
 
   saveFinancialProduct(product: FinancialProduct, isEdition: boolean) {

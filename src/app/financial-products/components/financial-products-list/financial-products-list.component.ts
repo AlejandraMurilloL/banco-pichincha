@@ -18,8 +18,8 @@ export class FinancialProductsListComponent implements OnInit, OnDestroy {
   filterText                : string = '';
   productToDelete!          : FinancialProduct;
 
-  pageSizes : number[] = [1, 2, 3];
-  pageSize  : number = 2;
+  pageSizes : number[] = [5, 10, 20];
+  pageSize  : number = 5;
 
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -92,6 +92,7 @@ export class FinancialProductsListComponent implements OnInit, OnDestroy {
 
   private _deleteFinancialProduct(): void {
     this.financialProductsServices
-      .deleteFinancialProduct(this.productToDelete.id);
+      .deleteFinancialProduct(this.productToDelete.id)
+      .subscribe(() => this._loadFinancialProducts());
   }
 }
