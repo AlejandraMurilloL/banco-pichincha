@@ -1,5 +1,5 @@
 .detail {
-    margin: 5% 25%;
+    margin: 5% 20%;
     background-color: #fff;
 }
 
@@ -71,4 +71,22 @@ button {
 
 input:disabled {
     background-color: #F4F6F9;
+}
+
+@media only screen and (max-width: 600px) {
+    .detail {
+        margin: 5% 5%;
+    }
+
+    .form-input {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0.8rem 0;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .detail {
+        margin: 5% 10%;
+    }
 }

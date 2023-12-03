@@ -1,6 +1,7 @@
 .actions-container, .summary-list {
     display: flex;
     justify-content: space-between;    
+    flex-flow: row wrap;
     margin-bottom: 20px;
 }
 
@@ -27,6 +28,7 @@ input {
     background-color: #fff;
     border-radius: 1px;
     padding: 1rem;
+    overflow-x:auto;
 }
 
 .products-table {
@@ -95,4 +97,11 @@ select {
 
 #product-logo {
     width: 2rem;
+}
+
+@media only screen and (max-width: 500px) {
+    input, button {
+        width: 100%;
+        margin: 5px 0;
+    }
 }
