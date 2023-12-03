@@ -23,7 +23,7 @@ describe('Financial products list component', () => {
                 FinancialProductsService,
                 DatePipe
             ]
-        });
+        }).compileComponents();
     });
 
     beforeEach(() => {
