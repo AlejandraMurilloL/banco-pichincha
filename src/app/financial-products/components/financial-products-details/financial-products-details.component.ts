@@ -1,7 +1,8 @@
 import { DatePipe, Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { FinancialProduct } from '../../models/financial-products.models';
 import { FinancialProductsService } from '../../services/financial-products.service';
 import { productIdValidator } from '../../validators/product-id.validator';
@@ -11,11 +12,13 @@ import { productIdValidator } from '../../validators/product-id.validator';
   templateUrl: './financial-products-details.component.html',
   styleUrls: ['./financial-products-details.component.css']
 })
-export class FinancialProductsDetailsComponent implements OnInit {
+export class FinancialProductsDetailsComponent implements OnInit, OnDestroy {
 
   form!     : FormGroup;
   todayDate : Date = new Date();
   isEdition : boolean = false;
+
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,55 +26,22 @@ export class FinancialProductsDetailsComponent implements OnInit {
     private router: Router,
     private location: Location,
     private financialProductService: FinancialProductsService
-  ) {
-    // const product = this.location.getState() as FinancialProduct;
-    // this.isEdition = product ? true : false;
-    // this.financialProduct = product;
-  }
+  ) { }
 
   ngOnInit(): void {
-    const { id, name, description, logo, date_release, date_revision } = this.location.getState() as FinancialProduct;
-
-    this.form = this.formBuilder.group({
-      id            : [
-                        id, 
-                        { 
-                          validators: [ Validators.required, Validators.minLength(3), Validators.maxLength(10) ], 
-                          asyncValidators: [productIdValidator(this.financialProductService)], 
-                          updateOn: 'blur'
-                        }
-                      ],
-      name          : [name, [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ]],
-      description   : [description, [ Validators.required, Validators.minLength(10), Validators.maxLength(200) ]],
-      logo          : [logo, Validators.required],
-      date_release  : [this.datePipe.transform(date_release, "yyyy-MM-dd", 'UTC'), Validators.required],
-      date_revision : [{ value: this.datePipe.transform(date_revision, "yyyy-MM-dd", 'UTC'), disabled: true }, Validators.required]
-    });
-
-    if (!!id)  {
-      this.form.get('id')?.disable();
-      this.isEdition = true;
-    }
-
-    this.onChanges();
+    this._initializeForm();
+    this._onFormValuesChanges();
   }
 
   saveFinancialProduct(financialProduct: FinancialProduct): void {
     this.financialProductService
       .saveFinancialProduct(financialProduct, this.isEdition)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigate(['/financial-products/list']));
   }
 
   resetForm() {
     this.form.patchValue({ id: '', name: '', description: '', logo: '', date_release: '',  date_revision: ''});
-  }
-
-  onChanges(): void {
-    this.form.get('date_release')?.valueChanges.subscribe(val => {
-      const releaseDate = new Date(val);
-      const reviewDate = new Date(releaseDate.getFullYear() + 1, releaseDate.getMonth(), releaseDate.getDate() + 1);
-      this.form.patchValue({ date_revision: this.datePipe.transform(reviewDate, "yyyy-MM-dd") });
-    });
   }
 
   checkForErrorsIn(control: string): string {
@@ -98,5 +68,47 @@ export class FinancialProductsDetailsComponent implements OnInit {
     }
 
     return '';
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private _initializeForm() {
+    const { id, name, description, logo, date_release, date_revision } = this.location.getState() as FinancialProduct;
+
+    this.form = this.formBuilder.group({
+      id            : [id, { validators: [ Validators.required, Validators.minLength(3), Validators.maxLength(10) ], 
+                             asyncValidators: [productIdValidator(this.financialProductService)], 
+                             updateOn: 'blur' }],
+      name          : [name, [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ]],
+      description   : [description, [ Validators.required, Validators.minLength(10), Validators.maxLength(200) ]],
+      logo          : [logo, Validators.required],
+      date_release  : [this.datePipe.transform(date_release, "yyyy-MM-dd", 'UTC'), Validators.required],
+      date_revision : [{ value: this.datePipe.transform(date_revision, "yyyy-MM-dd", 'UTC'), disabled: true }, Validators.required]
+    });
+
+    this.isEdition = !!id ? true : false;
+    this._disableFields(id);
+  }
+  
+  private _disableFields(productId: string) {    
+    if (!!productId) 
+      this.form.get('id')?.disable();
+
+    this.form.get('date_revision')?.disable()
+  }
+  
+  private _onFormValuesChanges(): void {
+    this.form.get('date_release')?.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((val) => this._calculateReviewDate(val));
+  }
+
+  private _calculateReviewDate(releaseDateStr: string): void {
+    const releaseDate = new Date(releaseDateStr);
+    const reviewDate = new Date(releaseDate.getFullYear() + 1, releaseDate.getMonth(), releaseDate.getDate() + 1);
+    this.form.patchValue({ date_revision: this.datePipe.transform(reviewDate, "yyyy-MM-dd") });
   }
 }

@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { FinancialProduct } from '../../models/financial-products.models';
 import { FinancialProductsService } from '../../services/financial-products.service';
 
@@ -9,7 +10,7 @@ import { FinancialProductsService } from '../../services/financial-products.serv
   templateUrl: './financial-products-list.component.html',
   styleUrls: ['./financial-products-list.component.css']
 })
-export class FinancialProductsListComponent implements OnInit {
+export class FinancialProductsListComponent implements OnInit, OnDestroy {
 
   showConfirmModal          : boolean = false;
   financialProducts         : FinancialProduct[] = [];
@@ -20,6 +21,8 @@ export class FinancialProductsListComponent implements OnInit {
   pageSizes : number[] = [1, 2, 3];
   pageSize  : number = 2;
 
+  private destroy$: Subject<void> = new Subject<void>();
+
   constructor(
     private router: Router,
     private datePipe: DatePipe,
@@ -27,12 +30,7 @@ export class FinancialProductsListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.financialProductsServices
-      .getFinancialProducts()
-      .subscribe(data => {
-        this.financialProducts = data;
-        this.financialProductsFiltered = data.slice(0, this.pageSize);
-      });
+    this._loadFinancialProducts();
   }
 
   addFinancialProduct(): void {
@@ -68,8 +66,8 @@ export class FinancialProductsListComponent implements OnInit {
       return;
     }
   
-    this.financialProductsFiltered = this.financialProducts.filter(
-      item => item.id.toLowerCase().includes(this.filterText.toLowerCase()) ||
+    this.financialProductsFiltered = this.financialProducts
+    .filter(item => item.id.toLowerCase().includes(this.filterText.toLowerCase()) ||
               item.name.toLowerCase().includes(this.filterText.toLowerCase()) || 
               item.description.toLowerCase().includes(this.filterText.toLowerCase()) || 
               this.datePipe.transform(item.date_release, "dd/MM/yyyy", 'UTC')?.includes(this.filterText.toLowerCase()) || 
@@ -77,7 +75,22 @@ export class FinancialProductsListComponent implements OnInit {
     ).slice(0, this.pageSize);
   }
 
-  private _deleteFinancialProduct() {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private _loadFinancialProducts(): void {
+    this.financialProductsServices
+      .getFinancialProducts()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
+        this.financialProducts = data;
+        this.financialProductsFiltered = data.slice(0, this.pageSize);
+      });
+  }
+
+  private _deleteFinancialProduct(): void {
     this.financialProductsServices
       .deleteFinancialProduct(this.productToDelete.id);
   }

@@ -5,7 +5,6 @@ import { FinancialProductsService } from '../services/financial-products.service
 export function productIdValidator(
     financialProductService: FinancialProductsService,
 ): AsyncValidatorFn {
-    console.log('Validando ID.......');
     return (control: AbstractControl) => {
         return financialProductService
           .getExistFinancialProduct(control.value)
