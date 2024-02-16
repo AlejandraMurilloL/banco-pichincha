@@ -1,12 +1,11 @@
-#bank-logo {
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  margin: 0;
+
+  &__logo {
     width: 15rem;
     margin: 0.5rem;
+  }
 }
-
-.container {
-    display: flex;
-    justify-content: center;
-    background-color: #fff;
-    margin: 0;
-}
-
