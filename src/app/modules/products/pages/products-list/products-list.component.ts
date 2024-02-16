@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Product } from '../../models/products.models';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { ProductsService } from '../../services/products.service';
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.css']
 })
-export class ProductsListComponent {
+export class ProductsListComponent implements OnInit, OnDestroy {
   showConfirmModal          : boolean = false;
   financialProducts         : Product[] = [];
   financialProductsFiltered : Product[] = [];

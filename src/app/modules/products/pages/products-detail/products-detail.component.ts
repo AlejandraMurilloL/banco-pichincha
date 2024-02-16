@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { productIdValidator } from '../../validators/product-id.validator';
@@ -12,7 +12,7 @@ import { Product } from '../../models/products.models';
   templateUrl: './products-detail.component.html',
   styleUrls: ['./products-detail.component.css']
 })
-export class ProductsDetailComponent {
+export class ProductsDetailComponent implements OnDestroy, OnInit {
   form!     : FormGroup;
   todayDate : Date = new Date();
   isEdition : boolean = false;
