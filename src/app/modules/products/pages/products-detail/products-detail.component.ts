@@ -10,7 +10,7 @@ import { Product } from '../../models/products.models';
 @Component({
   selector: 'app-products-detail',
   templateUrl: './products-detail.component.html',
-  styleUrls: ['./products-detail.component.css']
+  styleUrls: ['./products-detail.component.scss']
 })
 export class ProductsDetailComponent implements OnDestroy, OnInit {
   form!     : FormGroup;
