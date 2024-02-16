@@ -6,15 +6,14 @@ import { DatePipe } from '@angular/common';
 import { ProductsService } from '../../services/products.service';
 
 @Component({
-  selector: 'app-products-list',
-  templateUrl: './products-list.component.html',
-  styleUrls: ['./products-list.component.scss']
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.scss']
 })
-export class ProductsListComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit, OnDestroy {
   showConfirmModal          : boolean = false;
   financialProducts         : Product[] = [];
   financialProductsFiltered : Product[] = [];
-  filterText                : string = '';
   productToDelete!          : Product;
 
   pageSizes : number[] = [5, 10, 20];
@@ -51,7 +50,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   pageSizeSelected(): void {
-    this.filterProducts();
+    this.filterProducts('');
     this.financialProductsFiltered = this.financialProductsFiltered.slice(0, this.pageSize);
   }
 
@@ -59,18 +58,18 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.router.navigate([`/products/update/${product.id}`], { state: product });
   }
 
-  filterProducts() {
-    if (!this.filterText) {
+  filterProducts(filterText: string) {
+    if (!filterText) {
       this.financialProductsFiltered = this.financialProducts;
       return;
     }
   
     this.financialProductsFiltered = this.financialProducts
-    .filter(item => item.id.toLowerCase().includes(this.filterText.toLowerCase()) ||
-              item.name.toLowerCase().includes(this.filterText.toLowerCase()) || 
-              item.description.toLowerCase().includes(this.filterText.toLowerCase()) || 
-              this.datePipe.transform(item.date_release, "dd/MM/yyyy", 'UTC')?.includes(this.filterText.toLowerCase()) || 
-              this.datePipe.transform(item.date_revision, "dd/MM/yyyy", 'UTC')?.includes(this.filterText.toLowerCase()) 
+    .filter(item => item.id.toLowerCase().includes(filterText.toLowerCase()) ||
+              item.name.toLowerCase().includes(filterText.toLowerCase()) || 
+              item.description.toLowerCase().includes(filterText.toLowerCase()) || 
+              this.datePipe.transform(item.date_release, "dd/MM/yyyy", 'UTC')?.includes(filterText.toLowerCase()) || 
+              this.datePipe.transform(item.date_revision, "dd/MM/yyyy", 'UTC')?.includes(filterText.toLowerCase()) 
     ).slice(0, this.pageSize);
   }
 

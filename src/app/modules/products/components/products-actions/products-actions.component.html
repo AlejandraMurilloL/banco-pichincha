@@ -1,0 +1,12 @@
+<div class="product-actions">
+    <input 
+      class="product-actions__search" 
+      type="text" 
+      placeholder="Search..." 
+      [(ngModel)]="filterText" 
+      (keyup)="onSearch()">      
+    <button 
+      class="product-actions__create" 
+      (click)="onCreate()"
+    >Agregar</button>
+</div>

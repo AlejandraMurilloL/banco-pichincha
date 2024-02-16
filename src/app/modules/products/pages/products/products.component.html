@@ -1,8 +1,5 @@
 <section class="list">
-    <div class="actions-container">
-        <input type="text" placeholder="Search..." [(ngModel)]="filterText" (keyup)="filterProducts()">
-        <button class="add" (click)="addFinancialProduct()">Agregar</button>
-    </div>
+    <app-products-actions (search)="filterProducts($event)"></app-products-actions>
     
     <div class="list-container">
         <table class="products-table">

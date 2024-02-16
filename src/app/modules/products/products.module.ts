@@ -2,16 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 
 import { ProductsRoutingModule } from './products-routing.module';
-import { ProductsListComponent } from './pages/products-list/products-list.component';
+import { ProductsComponent } from './pages/products/products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProductsDetailComponent } from './pages/products-detail/products-detail.component';
+import { ProductsActionsComponent } from './components/products-actions/products-actions.component';
 
 
 @NgModule({
   declarations: [
-    ProductsListComponent,
-    ProductsDetailComponent
+    ProductsComponent,
+    ProductsDetailComponent,
+    ProductsActionsComponent
   ],
   imports: [
     CommonModule,

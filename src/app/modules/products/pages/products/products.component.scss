@@ -1,4 +1,4 @@
-.actions-container, .summary-list {
+.summary-list {
     display: flex;
     justify-content: space-between;    
     flex-flow: row wrap;
@@ -7,21 +7,6 @@
 
 .list {
     margin: 5% 10%;
-}
-
-input {
-    padding: 0.6rem;
-    border: 1px solid #a5a8ad;
-    border-radius: 0.6rem;
-}
-
-.add {
-    background-color: #F9DE4B;
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 0.3rem;
-    font-weight: bold;
-    cursor: pointer;
 }
 
 .list-container {
