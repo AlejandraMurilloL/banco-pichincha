@@ -1,11 +1,9 @@
-<div #confirmModal class="modal">
-    <form class="modal-content">
-      <div class="container">
-        <p>{{ content }}</p> 
-        <div class="buttons-container">
-          <button type="button" (click)="closeModal()" class="cancel-button">Cancelar</button>
-          <button type="button" (click)="confirm()" class="confirm-button">Confirmar</button>
-        </div>
-      </div>
-    </form>
+<div class="modal">
+  <div class="modal__content">
+    <p class="modal__text">{{ content }}</p> 
+    <div class="modal__buttons-container">
+      <button type="button" (click)="closeModal()" class="modal__button modal__button--cancel">Cancelar</button>
+      <button type="button" (click)="confirm()" class="modal__button modal__button--confirm">Confirmar</button>
+    </div>
+  </div>
 </div>

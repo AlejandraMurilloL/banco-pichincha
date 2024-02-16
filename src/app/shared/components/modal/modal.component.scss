@@ -1,48 +1,57 @@
 .modal {
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(71, 78, 93, 0.9);
-    padding-top: 50px;
-}
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(71, 78, 93, 0.9);
+  padding-top: 50px;
 
-.modal-content {
+  &__content {
     background-color: #fefefe;
     margin: 5% auto 15% auto; 
     border: 1px solid #888;
     width: 30%; 
     border-radius: 0.5rem;
     padding: 1.5rem;
-}
 
-.buttons-container {
+    @media only screen and (max-width: 767px) {
+        width: 70%;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+        width: 60%;
+    }
+  }
+
+  &__text {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #EAECF2;
+  }
+
+  &__buttons-container {
     width: 100%;
     display: flex;
+    flex-flow: row wrap;
     justify-content: center;
-}
+  }
 
-button {
+  &__button {
     width: 45%;
     margin: 0.5rem;
     padding: .5rem 0;
     cursor: pointer;
     border: none;
     border-radius: 0.5rem;
-}
 
-.cancel-button {
-    background-color: #EAECF2;
-}
+    &--cancel {
+      background-color: #EAECF2;
+    }
 
-.confirm-button {
-    background-color: #F9DE4B;
-}
-
-p {
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #EAECF2;
+    &--confirm {
+      background-color: #F9DE4B;
+    }
+  }
 }
