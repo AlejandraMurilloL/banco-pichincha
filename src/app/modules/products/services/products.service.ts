@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { FinancialProduct } from '../models/financial-products.models';
+import { environment } from '../../../../environments/environment';
+import { Product } from '../models/products.models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FinancialProductsService {
+export class ProductsService {
 
   baseUrl: string = '';
 
@@ -15,7 +15,7 @@ export class FinancialProductsService {
   }
 
   getFinancialProducts() {
-    return this.http.get<FinancialProduct[]>(`${this.baseUrl}products`);
+    return this.http.get<Product[]>(`${this.baseUrl}products`);
   }
 
   getExistFinancialProduct(id: string) {
@@ -26,15 +26,15 @@ export class FinancialProductsService {
     return this.http.delete(`${this.baseUrl}products?id=${ id }`, { responseType: 'text' });
   }
 
-  saveFinancialProduct(product: FinancialProduct, isEdition: boolean) {
+  saveFinancialProduct(product: Product, isEdition: boolean) {
     return isEdition ? this._updateFinancialProduct(product) : this._createFinancialProduct(product);
   }
 
-  private _createFinancialProduct(product: FinancialProduct) {
-    return this.http.post<FinancialProduct>(`${this.baseUrl}products`, product);
+  private _createFinancialProduct(product: Product) {
+    return this.http.post<Product>(`${this.baseUrl}products`, product);
   }
 
-  private _updateFinancialProduct(product: FinancialProduct) {
-    return this.http.put<FinancialProduct>(`${this.baseUrl}products`, product);
+  private _updateFinancialProduct(product: Product) {
+    return this.http.put<Product>(`${this.baseUrl}products`, product);
   }
 }

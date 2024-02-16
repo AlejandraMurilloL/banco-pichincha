@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-confirm-modal',
-  templateUrl: './confirm-modal.component.html',
-  styleUrls: ['./confirm-modal.component.css']
+  selector: 'app-modal',
+  templateUrl: './modal.component.html',
+  styleUrls: ['./modal.component.css']
 })
-export class ConfirmModalComponent {
+export class ModalComponent {
   @Input() content: string = '';
   @Output() modalClosed: EventEmitter<void> = new EventEmitter<void>();
   @Output() modalConfirm: EventEmitter<void> = new EventEmitter<void>();

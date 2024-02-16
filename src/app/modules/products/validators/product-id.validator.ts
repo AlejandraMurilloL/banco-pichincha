@@ -1,9 +1,9 @@
 import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
 import { map } from 'rxjs/operators';
-import { FinancialProductsService } from '../services/financial-products.service';
+import { ProductsService } from '../services/products.service';
 
 export function productIdValidator(
-    financialProductService: FinancialProductsService,
+    financialProductService: ProductsService,
 ): AsyncValidatorFn {
     return (control: AbstractControl) => {
         return financialProductService

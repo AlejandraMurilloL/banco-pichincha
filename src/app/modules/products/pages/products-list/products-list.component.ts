@@ -1,22 +1,21 @@
-import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { FinancialProduct } from '../../models/financial-products.models';
-import { FinancialProductsService } from '../../services/financial-products.service';
+import { Product } from '../../models/products.models';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
-  selector: 'app-financial-products-list',
-  templateUrl: './financial-products-list.component.html',
-  styleUrls: ['./financial-products-list.component.css']
+  selector: 'app-products-list',
+  templateUrl: './products-list.component.html',
+  styleUrls: ['./products-list.component.css']
 })
-export class FinancialProductsListComponent implements OnInit, OnDestroy {
-
+export class ProductsListComponent {
   showConfirmModal          : boolean = false;
-  financialProducts         : FinancialProduct[] = [];
-  financialProductsFiltered : FinancialProduct[] = [];
+  financialProducts         : Product[] = [];
+  financialProductsFiltered : Product[] = [];
   filterText                : string = '';
-  productToDelete!          : FinancialProduct;
+  productToDelete!          : Product;
 
   pageSizes : number[] = [5, 10, 20];
   pageSize  : number = 5;
@@ -26,7 +25,7 @@ export class FinancialProductsListComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private datePipe: DatePipe,
-    private financialProductsServices: FinancialProductsService
+    private productsServices: ProductsService
   ) {}
 
   ngOnInit(): void {
@@ -34,11 +33,11 @@ export class FinancialProductsListComponent implements OnInit, OnDestroy {
   }
 
   addFinancialProduct(): void {
-    this.router.navigate(['/financial-products/create']);
+    this.router.navigate(['/products/create']);
   }
 
-  openConfirmModal(financialProduct: FinancialProduct): void {
-    this.productToDelete = financialProduct;
+  openConfirmModal(product: Product): void {
+    this.productToDelete = product;
     this.showConfirmModal = true;
   }
 
@@ -56,8 +55,8 @@ export class FinancialProductsListComponent implements OnInit, OnDestroy {
     this.financialProductsFiltered = this.financialProductsFiltered.slice(0, this.pageSize);
   }
 
-  editProduct(product: FinancialProduct): void  {
-    this.router.navigate([`/financial-products/update/${product.id}`], { state: product });
+  editProduct(product: Product): void  {
+    this.router.navigate([`/products/update/${product.id}`], { state: product });
   }
 
   filterProducts() {
@@ -81,7 +80,7 @@ export class FinancialProductsListComponent implements OnInit, OnDestroy {
   }
 
   private _loadFinancialProducts(): void {
-    this.financialProductsServices
+    this.productsServices
       .getFinancialProducts()
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
@@ -91,7 +90,7 @@ export class FinancialProductsListComponent implements OnInit, OnDestroy {
   }
 
   private _deleteFinancialProduct(): void {
-    this.financialProductsServices
+    this.productsServices
       .deleteFinancialProduct(this.productToDelete.id)
       .subscribe(() => this._loadFinancialProducts());
   }

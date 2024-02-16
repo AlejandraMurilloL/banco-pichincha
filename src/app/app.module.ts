@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AppInterceptor } from './core/interceptors/app-interceptor.service';
 import { HttpErrorInterceptor } from './core/interceptors/error-interceptor.service';
 import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     AppRoutingModule,
     SharedModule,
+    CoreModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({

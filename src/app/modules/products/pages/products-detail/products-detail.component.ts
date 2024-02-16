@@ -1,19 +1,18 @@
-import { DatePipe, Location } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { FinancialProduct } from '../../models/financial-products.models';
-import { FinancialProductsService } from '../../services/financial-products.service';
 import { productIdValidator } from '../../validators/product-id.validator';
+import { DatePipe, Location } from '@angular/common';
+import { Router } from '@angular/router';
+import { ProductsService } from '../../services/products.service';
+import { Product } from '../../models/products.models';
 
 @Component({
-  selector: 'app-financial-products-details',
-  templateUrl: './financial-products-details.component.html',
-  styleUrls: ['./financial-products-details.component.css']
+  selector: 'app-products-detail',
+  templateUrl: './products-detail.component.html',
+  styleUrls: ['./products-detail.component.css']
 })
-export class FinancialProductsDetailsComponent implements OnInit, OnDestroy {
-
+export class ProductsDetailComponent {
   form!     : FormGroup;
   todayDate : Date = new Date();
   isEdition : boolean = false;
@@ -25,7 +24,7 @@ export class FinancialProductsDetailsComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private router: Router,
     private location: Location,
-    private financialProductService: FinancialProductsService
+    private productService: ProductsService
   ) { }
 
   ngOnInit(): void {
@@ -33,9 +32,9 @@ export class FinancialProductsDetailsComponent implements OnInit, OnDestroy {
     this._onFormValuesChanges();
   }
 
-  saveFinancialProduct(financialProduct: FinancialProduct): void {
-    this.financialProductService
-      .saveFinancialProduct(financialProduct, this.isEdition)
+  saveFinancialProduct(product: Product): void {
+    this.productService
+      .saveFinancialProduct(product, this.isEdition)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigate(['/financial-products/list']));
   }
@@ -76,11 +75,11 @@ export class FinancialProductsDetailsComponent implements OnInit, OnDestroy {
   }
 
   private _initializeForm() {
-    const { id, name, description, logo, date_release, date_revision } = this.location.getState() as FinancialProduct;
+    const { id, name, description, logo, date_release, date_revision } = this.location.getState() as Product;
 
     this.form = this.formBuilder.group({
       id            : [id, { validators: [ Validators.required, Validators.minLength(3), Validators.maxLength(10) ], 
-                             asyncValidators: [productIdValidator(this.financialProductService)], 
+                             asyncValidators: [productIdValidator(this.productService)], 
                              updateOn: 'blur' }],
       name          : [name, [ Validators.required, Validators.minLength(5), Validators.maxLength(100) ]],
       description   : [description, [ Validators.required, Validators.minLength(10), Validators.maxLength(200) ]],

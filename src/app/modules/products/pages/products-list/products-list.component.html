@@ -46,9 +46,9 @@
     </div>
 </section>
 
-<app-confirm-modal 
+<app-modal 
     *ngIf="showConfirmModal" 
     content="¿Estás seguro de eliminar el producto {{ productToDelete.name }}?" 
     (modalClosed)="closeConfirmModal()"
     (modalConfirm)="confirmDelete()"
-></app-confirm-modal>
+></app-modal>

@@ -3,12 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'financial-products',
-    loadChildren: () => import('./financial-products/financial-products.module').then(m => m.FinancialProductsModule) 
+    path: 'products',
+    loadChildren: () => import('./modules/products/products.module').then(m => m.ProductsModule) 
   },
   {
     path: '**',
-    redirectTo: 'financial-products'
+    redirectTo: 'products'
   }
 ];
 
