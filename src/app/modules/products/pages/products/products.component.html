@@ -1,51 +1,21 @@
-<section class="list">
-    <app-products-actions (search)="filterProducts($event)"></app-products-actions>
+<section class="products">
+  <app-products-actions 
+    (search)="filterProducts($event)" 
+    (create)="addFinancialProduct()"
+  ></app-products-actions>
     
-    <div class="list-container">
-        <table class="products-table">
-            <thead>
-                <tr>
-                    <th>Logo</th>
-                    <th>Nombre del producto</th>
-                    <th>Descripción</th>
-                    <th>Fecha de liberación</th>
-                    <th>Fecha de reestructuración</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let product of financialProductsFiltered">
-                    <td>
-                        <img [src]="product.logo" alt="logo" id="product-logo">
-                    </td>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.description }}</td>
-                    <td>{{ product.date_release | date: 'dd/MM/yyyy': "UTC" }}</td>
-                    <td>{{ product.date_revision | date: 'dd/MM/yyyy': "UTC" }}</td>
-                    <td>
-                        <div class="dropdown">
-                            <img src="../../../../assets/menu.png" alt="icono menú" id="menu-icon">
-                            <div class="dropdown-content">
-                              <a (click)="editProduct(product)">Editar</a>
-                              <a (click)="openConfirmModal(product)">Eliminar</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>    
-        </table>
-        <div class="summary-list">
-            <span>{{ financialProductsFiltered.length }} Resultados</span>
-            <select name="pagination" id="pagination" (change)="pageSizeSelected()" [(ngModel)]="pageSize">
-                <option *ngFor="let item of pageSizes">{{ item }}</option>
-            </select>
-        </div>
-    </div>
+  <div class="products__list">
+    <app-products-list 
+      (openDeleteModal)="openConfirmModal($event)" 
+      (selectPageSize)="pageSizeSelected($event)" 
+      [financialProductsFiltered]="financialProductsFiltered"
+    ></app-products-list>
+  </div>
 </section>
 
 <app-modal 
-    *ngIf="showConfirmModal" 
-    content="¿Estás seguro de eliminar el producto {{ productToDelete.name }}?" 
-    (modalClosed)="closeConfirmModal()"
-    (modalConfirm)="confirmDelete()"
+  *ngIf="showConfirmModal" 
+  content="¿Estás seguro de eliminar el producto {{ productToDelete.name }}?" 
+  (modalClosed)="closeConfirmModal()"
+  (modalConfirm)="confirmDelete()"
 ></app-modal>

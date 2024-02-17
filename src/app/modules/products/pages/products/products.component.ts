@@ -16,8 +16,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   financialProductsFiltered : Product[] = [];
   productToDelete!          : Product;
 
-  pageSizes : number[] = [5, 10, 20];
-  pageSize  : number = 5;
+  pageSize: number = 5;
 
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -49,13 +48,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.showConfirmModal = false;
   }
 
-  pageSizeSelected(): void {
+  pageSizeSelected(pageSize: number): void {
+    this.pageSize = pageSize;
     this.filterProducts('');
     this.financialProductsFiltered = this.financialProductsFiltered.slice(0, this.pageSize);
-  }
-
-  editProduct(product: Product): void  {
-    this.router.navigate([`/products/update/${product.id}`], { state: product });
   }
 
   filterProducts(filterText: string) {
