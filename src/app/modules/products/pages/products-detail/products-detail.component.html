@@ -1,74 +1,74 @@
-<section class="detail">
-    <h2>Formulario de Registro</h2>
-    <form class="product-form" [formGroup]="form">
-        <div class="form-input">
-            <label for="id">ID</label>
+<section class="product">
+    <h2 class="product__title">Formulario de Registro</h2>
+    <form class="product__form" [formGroup]="form">
+        <div class="product__field">
+            <label for="id" class="product__label">ID</label>
             <input 
                 placeholder="ID" 
                 id="id" 
+                class="product__input"
                 formControlName="id" 
-                [class.valid]="form.get('id')?.valid && form.get('id')?.touched"
-                [class.invalid]="form.get('id')?.invalid && form.get('id')?.touched">
-            <span class="input-error">{{ checkForErrorsIn('id') }}</span>
+                [class.product__input--invalid]="form.get('id')?.invalid && form.get('id')?.touched">
+            <span class="product__input--error">{{ checkForErrorsIn('id') }}</span>
         </div>
 
-        <div class="form-input">
-            <label for="name">Nombre</label>
+        <div class="product__field">
+            <label for="name" class="product__label">Nombre</label>
             <input 
                 placeholder="Tarjeta Crédito" 
                 id="name" 
+                class="product__input"
                 formControlName="name"
-                [class.valid]="form.get('name')?.valid && form.get('name')?.touched"
-                [class.invalid]="form.get('name')?.invalid && form.get('name')?.touched">
-            <span class="input-error">{{ checkForErrorsIn('name') }}</span>
+                [class.product__input--invalid]="form.get('name')?.invalid && form.get('name')?.touched">
+            <span class="product__input--error">{{ checkForErrorsIn('name') }}</span>
         </div>
 
-        <div class="form-input">
-            <label for="description">Descripción</label>
+        <div class="product__field">
+            <label for="description" class="product__label">Descripción</label>
             <input 
                 type="text" 
                 placeholder="Descripción" 
                 id="description" 
+                class="product__input"
                 formControlName="description"
-                [class.valid]="form.get('description')?.valid && form.get('description')?.touched"
-                [class.invalid]="form.get('description')?.invalid && form.get('description')?.touched">
-            <span class="input-error">{{ checkForErrorsIn('description') }}</span>
+                [class.product__input--invalid]="form.get('description')?.invalid && form.get('description')?.touched">
+            <span class="product__input--error">{{ checkForErrorsIn('description') }}</span>
         </div>
 
-        <div class="form-input">
-            <label for="logo">Logo</label>
+        <div class="product__field">
+            <label for="logo" class="product__label">Logo</label>
             <input 
                 type="url" 
                 placeholder="Logo" 
                 id="logo" 
+                class="product__input"
                 formControlName="logo"
-                [class.valid]="form.get('logo')?.valid && form.get('logo')?.touched"
-                [class.invalid]="form.get('logo')?.invalid && form.get('logo')?.touched">
-            <span class="input-error">{{ checkForErrorsIn('logo') }}</span>
+                [class.product__input--invalid]="form.get('logo')?.invalid && form.get('logo')?.touched">
+            <span class="product__input--error">{{ checkForErrorsIn('logo') }}</span>
         </div>
 
-        <div class="form-input">
-            <label for="releaseDate">Fecha Liberación</label>
+        <div class="product__field">
+            <label for="releaseDate" class="product__label">Fecha Liberación</label>
             <input 
                 type="date" 
                 placeholder="Fecha liberación" 
-                id="releaseDate" 
+                id="releaseDate"
+                class="product__input" 
                 formControlName="date_release" 
                 min="{{ todayDate | date:'yyyy-MM-dd'}}"
-                [class.valid]="form.get('date_release')?.valid && form.get('date_release')?.touched"
-                [class.invalid]="form.get('date_release')?.invalid && form.get('date_release')?.touched">
-            <span class="input-error">{{ checkForErrorsIn('date_release') }}</span>
+                [class.product__input--invalid]="form.get('date_release')?.invalid && form.get('date_release')?.touched">
+            <span class="product__input--error">{{ checkForErrorsIn('date_release') }}</span>
         </div>
 
-        <div class="form-input">
-            <label for="reviewDate">Fecha Revisión</label>
-            <input type="date" placeholder="Fecha de revisión" id="reviewDate" formControlName="date_revision">
+        <div class="product__field">
+            <label for="reviewDate" class="product__label">Fecha Revisión</label>
+            <input type="date" placeholder="Fecha de revisión" id="reviewDate" class="product__input" formControlName="date_revision">
         </div>
 
     </form>    
-    <div class="actions-container">
-        <button class="restart-button" (click)="resetForm()">Reiniciar</button>
-        <button class="send-button" (click)="saveFinancialProduct(form.getRawValue())" [disabled]="form.invalid">Enviar</button>
+    <div class="product__actions">
+        <button class="product__action product__action--restart" (click)="resetForm()">Reiniciar</button>
+        <button class="product__action product__action--send" (click)="saveFinancialProduct(form.getRawValue())" [disabled]="form.invalid">Enviar</button>
     </div>
 
 </section>

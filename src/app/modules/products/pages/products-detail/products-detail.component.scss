@@ -1,92 +1,84 @@
-.detail {
-    margin: 5% 20%;
-    background-color: #fff;
-}
+.product {
+  margin: 5% 20%;
+  background-color: #fff;
 
-h2 {
+  &__title {
     text-align: center;
     padding: 1rem;
     border-bottom: 1px solid #a5a8ad;
-}
+  }
 
-.product-form {
+  &__form {
     display: flex;
     justify-content: space-between;
     flex-flow: row wrap;
     margin: 0 2.5rem;
-}
+  }
 
-.form-input {
+  &__field {
     width: 49%;
     box-sizing: border-box;
     margin: 0.8rem 0;
-}
 
-.form-input input {
+    @media only screen and (max-width: 600px) {
+      width: 100%;
+      box-sizing: border-box;
+      margin: 0.8rem 0;
+    }
+  }
+
+  &__label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  &__input {
     width: 100%;
     box-sizing: border-box;
     padding: 0.8rem 0.5rem;
     border: 1px solid #a5a8ad;
     border-radius: 0.3rem;
-}
 
-label {
-    display: block;
-    font-size: 0.8rem;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
+    &--error {
+      color: red;
+      font-size: 0.8rem;
+    }
 
-.actions-container {
+    &--invalid {
+      border: 1px solid red !important;
+    }
+
+    &:disabled {
+      background-color: #F4F6F9;
+    }
+  }
+
+  &__actions {
     width: 100%;
     display: flex;
     justify-content: center;
     margin-bottom: 2rem;
-}
+  }
 
-button {
+  &__action {
     padding: 0.7rem 1.5rem;
     margin: 1rem;
     border: none;
     border-radius: 0.3rem;
     cursor: pointer;
-}
 
-.restart-button {
-    background-color: #E9ECF3;
-}
-
-.send-button {
-    background-color: #F9DE4B;
-}
-
-.input-error {
-    color: red;
-    font-size: 0.8rem;
-}
-
-.invalid {
-    border: 1px solid red !important;
-}
-
-input:disabled {
-    background-color: #F4F6F9;
-}
-
-@media only screen and (max-width: 600px) {
-    .detail {
-        margin: 5% 5%;
+    &--restart {
+      background-color: #E9ECF3;
     }
 
-    .form-input {
-        width: 100%;
-        box-sizing: border-box;
-        margin: 0.8rem 0;
+    &--send {
+      background-color: #F9DE4B;
     }
-}
+  }
 
-@media only screen and (max-width: 1000px) {
-    .detail {
-        margin: 5% 10%;
-    }
+  @media only screen and (max-width: 1000px) {
+    margin: 5% 10%;
+  }
 }
