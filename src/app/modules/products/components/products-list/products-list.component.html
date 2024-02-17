@@ -1,39 +1,48 @@
-<table class="products-list">
-    <caption></caption>
-    <thead class="products-list__header">
-        <tr class="products-list__row">
-            <th>Logo</th>
-            <th>Nombre del producto</th>
-            <th>Descripción</th>
-            <th>Fecha de liberación</th>
-            <th>Fecha de reestructuración</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let product of financialProductsFiltered" class="products-list__row">
-            <td>
-                <img [src]="product.logo" alt="logo" class="products-list__logo">
-            </td>
-            <td>{{ product.name }}</td>
-            <td>{{ product.description }}</td>
-            <td>{{ product.date_release | date: 'dd/MM/yyyy': "UTC" }}</td>
-            <td>{{ product.date_revision | date: 'dd/MM/yyyy': "UTC" }}</td>
-            <td>
-                <div class="product-menu">
-                    <img src="../../../../assets/menu.png" alt="icono menú" class="product-menu__icon">
-                    <div class="product-menu__options">
-                      <a class="product-menu__option" (click)="editProduct(product)">Editar</a>
-                      <a class="product-menu__option" (click)="openConfirmModal(product)">Eliminar</a>
+<ng-container *ngIf="((products$ | async) || [] | filter:filterText | slice: 0:pageSize) as productsFiltered">
+    <table class="products-list">
+        <caption></caption>
+        <thead class="products-list__header">
+            <tr class="products-list__row">
+                <th>Logo</th>
+                <th>Nombre del producto</th>
+                <th>Descripción</th>
+                <th>Fecha de liberación</th>
+                <th>Fecha de reestructuración</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of productsFiltered" class="products-list__row">
+                <td>
+                    <img [src]="product.logo" alt="logo" class="products-list__logo">
+                </td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.date_release | date: 'yyyy-MM-dd': "UTC" }}</td>
+                <td>{{ product.date_revision | date: 'yyyy-MM-dd': "UTC" }}</td>
+                <td>
+                    <div class="product-menu">
+                        <img src="../../../../assets/menu.png" alt="icono menú" class="product-menu__icon">
+                        <div class="product-menu__options">
+                          <a class="product-menu__option" (click)="editProduct(product)">Editar</a>
+                          <a class="product-menu__option" (click)="deleteProduct(product)">Eliminar</a>
+                        </div>
                     </div>
-                </div>
-            </td>
-        </tr>
-    </tbody>    
-</table>
-<div class="products-list__summary">
-    <span>{{ financialProductsFiltered.length }} Resultados</span>
-    <select name="pagination" class="product-list__pagination" (change)="pageSizeSelected()" [(ngModel)]="pageSize">
-        <option *ngFor="let item of pageSizes">{{ item }}</option>
-    </select>
-</div>
+                </td>
+            </tr>
+        </tbody>    
+    </table>
+    <div class="products-list__summary">
+        <span>{{ productsFiltered.length }} Resultados</span>
+        <select name="pagination" class="product-list__pagination" [(ngModel)]="pageSize">
+            <option *ngFor="let item of pageSizes">{{ item }}</option>
+        </select>
+    </div>
+</ng-container>
+
+<app-modal 
+  *ngIf="showDeleteModal" 
+  content="¿Estás seguro de eliminar el producto {{ productToDelete.name }}?" 
+  (modalClosed)="closeDeleteModal()"
+  (modalConfirm)="confirmDeleteProduct()"
+></app-modal>

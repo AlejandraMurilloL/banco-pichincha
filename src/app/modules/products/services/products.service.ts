@@ -14,27 +14,27 @@ export class ProductsService {
     this.baseUrl = environment.apiUrl;
   }
 
-  getFinancialProducts() {
+  getProducts() {
     return this.http.get<Product[]>(`${this.baseUrl}products`);
   }
 
-  getExistFinancialProduct(id: string) {
+  getExistProduct(id: string) {
     return this.http.get<boolean>(`${this.baseUrl}products/verification?id=${ id }`);
   }
 
-  deleteFinancialProduct(id: string) {
+  deleteProduct(id: string) {
     return this.http.delete(`${this.baseUrl}products?id=${ id }`, { responseType: 'text' });
   }
 
-  saveFinancialProduct(product: Product, isEdition: boolean) {
-    return isEdition ? this._updateFinancialProduct(product) : this._createFinancialProduct(product);
+  saveProduct(product: Product, isEdition: boolean) {
+    return isEdition ? this._updateProduct(product) : this._createProduct(product);
   }
 
-  private _createFinancialProduct(product: Product) {
+  private _createProduct(product: Product) {
     return this.http.post<Product>(`${this.baseUrl}products`, product);
   }
 
-  private _updateFinancialProduct(product: Product) {
+  private _updateProduct(product: Product) {
     return this.http.put<Product>(`${this.baseUrl}products`, product);
   }
 }

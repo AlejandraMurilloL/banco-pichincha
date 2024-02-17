@@ -1,21 +1,12 @@
 <section class="products">
   <app-products-actions 
-    (search)="filterProducts($event)" 
-    (create)="addFinancialProduct()"
+    (search)="filterTextChanged($event)"
+    (create)="createProduct()"
   ></app-products-actions>
     
   <div class="products__list">
     <app-products-list 
-      (openDeleteModal)="openConfirmModal($event)" 
-      (selectPageSize)="pageSizeSelected($event)" 
-      [financialProductsFiltered]="financialProductsFiltered"
+      [filterText]="filterText"
     ></app-products-list>
   </div>
 </section>
-
-<app-modal 
-  *ngIf="showConfirmModal" 
-  content="¿Estás seguro de eliminar el producto {{ productToDelete.name }}?" 
-  (modalClosed)="closeConfirmModal()"
-  (modalConfirm)="confirmDelete()"
-></app-modal>

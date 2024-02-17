@@ -1,13 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { ProductsRoutingModule } from './products-routing.module';
-import { ProductsComponent } from './pages/products/products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ProductsDetailComponent } from './pages/products-detail/products-detail.component';
 import { ProductsActionsComponent } from './components/products-actions/products-actions.component';
 import { ProductsListComponent } from './components/products-list/products-list.component';
+import { ProductsDetailComponent } from './pages/products-detail/products-detail.component';
+import { ProductsComponent } from './pages/products/products.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { ProductsRoutingModule } from './products-routing.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ProductsListComponent } from './components/products-list/products-list.
     ProductsComponent,
     ProductsDetailComponent,
     ProductsActionsComponent,
-    ProductsListComponent
+    ProductsListComponent,
+    FilterPipe
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,7 @@ import { ProductsListComponent } from './components/products-list/products-list.
     SharedModule
   ],
   providers: [
-    DatePipe
+    DatePipe,
   ]
 })
 export class ProductsModule { }

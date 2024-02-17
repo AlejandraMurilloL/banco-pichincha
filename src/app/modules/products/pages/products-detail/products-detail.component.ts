@@ -1,11 +1,11 @@
+import { DatePipe, Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
-import { productIdValidator } from '../../validators/product-id.validator';
-import { DatePipe, Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { ProductsService } from '../../services/products.service';
+import { Subject, takeUntil } from 'rxjs';
 import { Product } from '../../models/products.models';
+import { ProductsService } from '../../services/products.service';
+import { productIdValidator } from '../../validators/product-id.validator';
 
 @Component({
   selector: 'app-products-detail',
@@ -34,7 +34,7 @@ export class ProductsDetailComponent implements OnDestroy, OnInit {
 
   saveFinancialProduct(product: Product): void {
     this.productService
-      .saveFinancialProduct(product, this.isEdition)
+      .saveProduct(product, this.isEdition)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigate(['/financial-products/list']));
   }
