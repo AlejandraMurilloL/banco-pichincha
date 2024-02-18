@@ -4,12 +4,17 @@
         <div class="product__field">
             <label for="id" class="product__label">ID</label>
             <input 
-                placeholder="ID" 
                 id="id" 
+                placeholder="ID" 
                 class="product__input"
                 formControlName="id" 
                 [class.product__input--invalid]="form.get('id')?.invalid && form.get('id')?.touched">
-            <span class="product__input--error">{{ checkForErrorsIn('id') }}</span>
+            <app-form-error-container [forControl]="form.get('id')">
+                <app-form-error-message errorCode="required"></app-form-error-message>
+                <app-form-error-message errorCode="idAlreadyExists"></app-form-error-message>
+                <app-form-error-message errorCode="minlength" customMessage="El campo debe tener mínimo 3 caracteres"></app-form-error-message>
+                <app-form-error-message errorCode="maxlength" customMessage="El campo debe tener máximo 10 caracteres"></app-form-error-message>
+            </app-form-error-container>
         </div>
 
         <div class="product__field">
@@ -20,7 +25,11 @@
                 class="product__input"
                 formControlName="name"
                 [class.product__input--invalid]="form.get('name')?.invalid && form.get('name')?.touched">
-            <span class="product__input--error">{{ checkForErrorsIn('name') }}</span>
+            <app-form-error-container [forControl]="form.get('name')">
+                <app-form-error-message errorCode="required"></app-form-error-message>
+                <app-form-error-message errorCode="minlength" customMessage="El campo debe tener mínimo 5 caracteres"></app-form-error-message>
+                <app-form-error-message errorCode="maxlength" customMessage="El campo debe tener máximo 100 caracteres"></app-form-error-message>
+            </app-form-error-container>
         </div>
 
         <div class="product__field">
@@ -32,7 +41,11 @@
                 class="product__input"
                 formControlName="description"
                 [class.product__input--invalid]="form.get('description')?.invalid && form.get('description')?.touched">
-            <span class="product__input--error">{{ checkForErrorsIn('description') }}</span>
+            <app-form-error-container [forControl]="form.get('description')">
+                <app-form-error-message errorCode="required"></app-form-error-message>
+                <app-form-error-message errorCode="minlength" customMessage="El campo debe tener mínimo 10 caracteres"></app-form-error-message>
+                <app-form-error-message errorCode="maxlength" customMessage="El campo debe tener máximo 200 caracteres"></app-form-error-message>
+            </app-form-error-container>
         </div>
 
         <div class="product__field">
@@ -44,7 +57,9 @@
                 class="product__input"
                 formControlName="logo"
                 [class.product__input--invalid]="form.get('logo')?.invalid && form.get('logo')?.touched">
-            <span class="product__input--error">{{ checkForErrorsIn('logo') }}</span>
+            <app-form-error-container [forControl]="form.get('logo')">
+                <app-form-error-message errorCode="required"></app-form-error-message>
+            </app-form-error-container>
         </div>
 
         <div class="product__field">
@@ -57,7 +72,9 @@
                 formControlName="date_release" 
                 min="{{ todayDate | date:'yyyy-MM-dd'}}"
                 [class.product__input--invalid]="form.get('date_release')?.invalid && form.get('date_release')?.touched">
-            <span class="product__input--error">{{ checkForErrorsIn('date_release') }}</span>
+            <app-form-error-container [forControl]="form.get('date_release')">
+                <app-form-error-message errorCode="required"></app-form-error-message>
+            </app-form-error-container>
         </div>
 
         <div class="product__field">
