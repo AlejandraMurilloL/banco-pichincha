@@ -21,7 +21,7 @@ export class HttpErrorInterceptor extends HttpErrorResponse {
     return next.handle(request).pipe(
       catchError((httpErrorResponse: HttpErrorResponse) => {
         this.toastService.error(httpErrorResponse.error, '', { closeButton: true });          
-        return throwError(() => new Error(httpErrorResponse.message));
+        return throwError(() => httpErrorResponse);
       })
     );
   }

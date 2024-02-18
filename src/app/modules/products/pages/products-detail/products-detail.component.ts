@@ -60,12 +60,12 @@ export class ProductsDetailComponent implements OnDestroy, OnInit {
       date_revision : [this.datePipe.transform(date_revision, "yyyy-MM-dd", 'UTC'), Validators.required]
     });
 
-    this.isEdition = !!id ? true : false;
+    this.isEdition = !!id;
     this._disableFields(id);
   }
   
   private _disableFields(productId: string) {    
-    if (!!productId) 
+    if (productId) 
       this.form.get('id')?.disable();
 
     this.form.get('date_revision')?.disable()
