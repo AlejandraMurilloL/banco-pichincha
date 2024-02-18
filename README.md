@@ -62,3 +62,6 @@ Implementados por medio de Jest, para ejecutarlos correr el comando
 
     ng test
 
+Se cuenta con una cobertura del 71.63%
+![Tests](./src/assets/documentation/tests.png)
+
